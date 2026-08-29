@@ -1,56 +1,60 @@
 <script>
   // ==================== VARIABLES ====================
-  // ✅ WORKING: Reactive variables (demonstrates Svelte reactivity)
   let firstNumber = 0;
   let secondNumber = 0;
   let result = 0;
-  let operation = '';  // Track which operation was used
+  let operation = '';
 
   // ==================== FUNCTIONS ====================
 
-  // ✅ WORKING: Addition function (demonstrates basic arithmetic operation)
+  // Addition
   function addition() {
     result = firstNumber + secondNumber;
     operation = 'Addition';
   }
 
-  // ✅ WORKING: Multiplication function (demonstrates another operation pattern)
+  // Multiplication
   function multiplication() {
     result = firstNumber * secondNumber;
     operation = 'Multiplication';
   }
 
-  // ✅ WORKING: Clear function (demonstrates state reset pattern)
+  // TODO 1: Subtraction
+  function subtraction() {
+    result = firstNumber - secondNumber;
+    operation = 'Subtraction';
+  }
+
+  // TODO 2: Division with zero guard
+  function division() {
+    if (secondNumber === 0) {
+      result = 'Cannot divide by zero';
+      operation = 'Division Error';
+    } else {
+      result = firstNumber / secondNumber;
+      operation = 'Division';
+    }
+  }
+
+  // TODO 3: Modulo
+  function modulo() {
+    result = firstNumber % secondNumber;
+    operation = 'Modulo';
+  }
+
+  // Clear
   function clear() {
     firstNumber = 0;
     secondNumber = 0;
     result = 0;
     operation = '';
   }
-
-  // TODO 1: Implement subtraction() so result = firstNumber - secondNumber
-  //   and operation = 'Subtraction'. Verify: clicking Subtract on 10 and 4
-  //   shows "Subtraction Result: 6".
-  function subtraction() {
-  }
-
-  // TODO 2: Implement division() with a guard. If secondNumber is 0, set
-  //   result to a clear error string and label operation accordingly.
-  //   Otherwise compute firstNumber / secondNumber and label 'Division'.
-  //   Verify: 5 / 0 shows the error; 20 / 4 shows 5.
-  function division() {
-  }
-
-  // TODO 3: Implement modulo() using the % operator and label 'Modulo'.
-  //   Verify: 17 % 5 shows 2.
-  function modulo() {
-  }
 </script>
 
 <style>
   @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css");
 
-  /* ✅ WORKING: Gradient background */
+  /* Gradient background */
   :global(body) {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
@@ -58,7 +62,7 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   }
 
-  /* ✅ WORKING: Calculator container styling */
+  /* Calculator container */
   .calculator-container {
     max-width: 600px;
     margin: 3rem auto;
@@ -68,7 +72,7 @@
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
   }
 
-  /* ✅ WORKING: Result display styling */
+  /* Result display */
   .result-display {
     font-size: 2.5rem;
     font-weight: bold;
@@ -97,7 +101,7 @@
     font-weight: normal;
   }
 
-  /* ✅ WORKING: Button enhancements */
+  /* Button enhancements */
   .btn {
     font-size: 1.1rem;
     padding: 0.8rem;
@@ -115,7 +119,7 @@
     transform: translateY(0);
   }
 
-  /* ✅ WORKING: Input styling */
+  /* Input styling */
   input[type="number"] {
     font-size: 1.2rem;
     padding: 0.8rem;
@@ -130,7 +134,7 @@
     box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
   }
 
-  /* ✅ WORKING: Clear button styling */
+  /* Clear button styling */
   .btn-danger {
     background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
     margin-top: 1rem;
@@ -141,19 +145,14 @@
     font-weight: 700;
     margin-bottom: 2rem;
   }
-
-  /* ⚠️ TODO: Add custom animation for result changes (optional)
-     HINTS:
-     - Use @keyframes to create a fade-in or scale animation
-     - Apply animation to .result-display when result updates
-     - Consider pulse or slide-in effects */
 </style>
 
 <div class="container mt-5">
   <div class="calculator-container">
+
     <h1 class="text-center mb-4">🧮 Math Calculator</h1>
 
-    <!-- ✅ WORKING: Input Fields with bind:value (demonstrates two-way binding) -->
+    <!-- Input Fields -->
     <div class="row mb-3">
       <div class="col-md-6">
         <input
@@ -163,6 +162,7 @@
           bind:value={firstNumber}
         />
       </div>
+
       <div class="col-md-6">
         <input
           type="number"
@@ -173,51 +173,80 @@
       </div>
     </div>
 
-    <!-- ✅ WORKING: Operation Buttons (2 working, 3 for students to connect) -->
+    <!-- Operation Buttons -->
     <div class="row mb-3">
+
+      <!-- Addition -->
       <div class="col">
-        <!-- ✅ WORKING: Addition button with on:click -->
-        <button class="btn btn-primary btn-block" on:click={addition}>
+        <button
+          class="btn btn-primary btn-block"
+          on:click={addition}
+        >
           + Add
         </button>
       </div>
+
+      <!-- Subtraction -->
       <div class="col">
-        <!-- TODO 4: Wire this button to subtraction(). -->
-        <button class="btn btn-secondary btn-block">
+        <button
+          class="btn btn-secondary btn-block"
+          on:click={subtraction}
+        >
           - Subtract
         </button>
       </div>
+
+      <!-- Multiplication -->
       <div class="col">
-        <!-- ✅ WORKING: Multiplication button with on:click -->
-        <button class="btn btn-success btn-block" on:click={multiplication}>
+        <button
+          class="btn btn-success btn-block"
+          on:click={multiplication}
+        >
           × Multiply
         </button>
       </div>
+
+      <!-- Division -->
       <div class="col">
-        <!-- TODO 4: Wire this button to division(). -->
-        <button class="btn btn-warning btn-block">
+        <button
+          class="btn btn-warning btn-block"
+          on:click={division}
+        >
           ÷ Divide
         </button>
       </div>
+
+      <!-- Modulo -->
       <div class="col">
-        <!-- TODO 4: Wire this button to modulo(). -->
-        <button class="btn btn-info btn-block">
+        <button
+          class="btn btn-info btn-block"
+          on:click={modulo}
+        >
           % Modulo
         </button>
       </div>
+
     </div>
 
-    <!-- ✅ WORKING: Clear button (demonstrates state reset) -->
-    <button class="btn btn-danger btn-block" on:click={clear}>
+    <!-- Clear Button -->
+    <button
+      class="btn btn-danger btn-block"
+      on:click={clear}
+    >
       🔄 Clear All
     </button>
 
-    <!-- ✅ WORKING: Result Display (demonstrates reactive UI updates) -->
+    <!-- Result Display -->
     <div class="result-display">
       {#if operation}
         <div>
-          <div class="operation-label">{operation} Result:</div>
-          <div>{result}</div>
+          <div class="operation-label">
+            {operation} Result:
+          </div>
+
+          <div>
+            {result}
+          </div>
         </div>
       {:else}
         <p style="color: #94a3b8; font-size: 1.2rem; margin: 0;">
@@ -226,17 +255,5 @@
       {/if}
     </div>
 
-    <!-- ⚠️ TODO: Add calculation history feature (Extension Challenge)
-         SUCCESS CRITERIA:
-         - Create historyList array to store past calculations
-         - Push each calculation to history when operation is performed
-         - Display history list below result display
-         - Include clear history button
-
-         HINTS:
-         - Use an array: let historyList = [];
-         - Push format: `${firstNumber} ${operator} ${secondNumber} = ${result}`
-         - Use {#each historyList as item} to display
-         - Style as a list with timestamps -->
   </div>
 </div>
